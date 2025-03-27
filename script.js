@@ -15,20 +15,36 @@ document.addEventListener('keypress', evento => {
     }
 })
 
-const personagem = {
+let personagem = {
     x: 100,
     y: canvas.height - 100,
     largura: 50,
     altura: 50,
-    velocidade_y: 0
+    velocidade_y: 0,
+    pulando: false,
+    velocidade_x: 0,
+    imagem: new Image()
 }
 
-const obstaculo = {
+personagem.imagem.src= './imagem.jpg'
+personagem.largura = 200
+personagem.altura = 200
+
+
+let obstaculo = {
     x: canvas.width,
     y: canvas.height - 100,
     largura: 50,
     altura: Math.random() * (150 - 50) + 50,
     velocidade_x: 5
+}
+function desenharPersonagem() {
+    ctx.drawImage(
+        personagem.imagem,
+        personagem.x,
+        personagem.y,
+        personagem.largura,
+        personagem. altura )
 }
 
 function aumentarVelocidade() {
@@ -39,13 +55,8 @@ function aumentarVelocidade() {
 
 setInterval(aumentarVelocidade, 1000)
 
-function desenharPersonagem() {
-    ctx.fillStyle = 'pink'
-    ctx.fillRect(personagem.x, personagem.y, personagem.largura, personagem.altura)
-}
-
 function desenharObstaculo() {
-    ctx.fillStyle = 'gray'
+    ctx.fillStyle = 'green'
     ctx.fillRect(obstaculo.x, canvas.height - obstaculo.altura, obstaculo.largura, obstaculo.altura)
 }
 
@@ -90,16 +101,16 @@ function atualizarObstaculo() {
 }
 
 function exibirPontuacao() {
-    ctx.fillStyle = 'pink'
-    ctx.font = '20px Arial'
+    ctx.fillStyle = 'green'
+    ctx.font = '20px Times New Roman'
     ctx.fillText(`Pontuação: ${pontuacao}`, 10, 30)
     ctx.fillText(`Melhor Pontuação: ${melhorPontuacao}`, 10, 60)
 }
 
 function exibirMensagemGameOver() {
     if (gameOver) {
-        ctx.fillStyle = 'pink'
-        ctx.font = '50px Arial'
+        ctx.fillStyle = 'green'
+        ctx.font = '50px Times New Roman'
         ctx.fillText('GAME OVER', canvas.width / 4, canvas.height / 2)
     }
 }
@@ -124,5 +135,7 @@ function loop() {
     exibirMensagemGameOver()
     requestAnimationFrame(loop)
 }
+
+
 
 loop()
